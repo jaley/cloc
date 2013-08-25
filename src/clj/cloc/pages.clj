@@ -35,11 +35,12 @@
      (if debug?
        (p/include-js "js/main-debug.js")
        (p/include-js "js/main.js"))]
-    [:body {:onload (if debug? "cloc.repl.connect()" "")}
+    [:body {:onload (str "cloc.core.load_ui(); "
+                         (if debug? "cloc.repl.connect()" ""))}
      [:div {:class "container"}
       (navbar)
       [:div {:class "row"}
        [:div {:id "browser-container"
-              :class "span4"}]
+              :class "span3"}]
        [:div {:id "docpage-container"
-              :class "span8"}]]]]]))
+              :class "span9"}]]]]]))

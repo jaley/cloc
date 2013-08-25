@@ -40,6 +40,22 @@
        [:div.var-doc
         [:pre (:doc v)]]])]))
 
+(deftemplate landing-page
+  []
+  [:div.docpage
+   [:h2 "Welcome to " [:span.cloc-mono "cloc"]]
+   [:p (str "Use the navigation bar on the left to browse around "
+            "documentation for your own code and libraries you have "
+            "on your project classpath.")]
+   [:p (str "The search bar at the top will give you real-time search "
+            "suggestions as you type. This is probably going to be the "
+            "easiest way to find what you're looking for!")]
+   [:p (str "To be honest, if you couldn't figure those few things out "
+            "for yourself just by looking at the UI, you should probably "
+            "just back away from the keyboard and forget about trying to "
+            "to do any programming. I just wanted to write something in "
+            "this space because the landing page looked empty!")]])
+
 (defn ns-docs
   "Return a documentation page as a div for requested
    namespace and library."
@@ -49,3 +65,7 @@
                  :namespace namesp}
         :handler (fn [docs]
                    (swap-docpage (docpage-div lib docs)))}))
+
+(defn show-landing!
+  []
+  (swap-docpage (landing-page)))

@@ -1,0 +1,29 @@
+.cloc-mono {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+.lib-heading {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 18px;
+}
+
+.lib-section-nav {
+  padding: 10px;
+}
+
+.browser-item {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 10px;
+}
+
+.var-heading {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 18px;
+}
+
+.var-doc {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}

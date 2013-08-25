@@ -5,7 +5,8 @@
             [ring.middleware.edn    :refer [wrap-edn-params]]
             [ring.middleware.params :refer [wrap-params]]
             [cloc.pages             :as    pages]
-            [cloc.index             :as    index]))
+            [cloc.index             :as    index]
+            [cloc.search            :refer [search]]))
 
 (defn landing-page
   "Generate a landing page response.
@@ -34,7 +35,9 @@
            (GET "/ns" [lib]
                 (edn-response (index/namespaces lib)))
            (GET "/docs" [lib namespace]
-                (edn-response (index/docs lib namespace)))))
+                (edn-response (index/docs lib namespace)))
+           (GET "/search" [query]
+                (edn-response (search query)))))
 
 (def main
   (-> (routes pages api)

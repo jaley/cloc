@@ -48,14 +48,22 @@
   [e]
   (d/closest (.-target e) :li.result))
 
+(defn active-result
+  []
+  (sel1 :.active-result))
+
+(defn set-active-result!
+  [elem]
+  (when-let [current (active-result)]
+    (d/remove-class! current :active-result))
+  (d/add-class! elem :active-result))
+
 (defn with-results-listeners
   [list-item]
   (doto (node list-item)
     (d/listen! :mouseenter
                (fn [e]
-                 (when-let [current (sel1 :.active-result)]
-                   (d/remove-class! current :active-result))
-                 (d/add-class! (parent-result e) :active-result))
+                 (set-active-result! (parent-result e)))
 
                :click
                (fn [e]
@@ -78,7 +86,7 @@
    (-> (sel1 :#results-list)
        (d/replace! (make-results-list results))
        (d/show!))
-   (d/add-class! (sel1 :.result) :active-result)))
+   (set-active-result! (sel1 :.result))))
 
 (defn search!
   [e]
@@ -89,9 +97,29 @@
            {:params  {:query qry}
             :handler update-results!}))))
 
+(defn handle-shortcuts-press!
+  [e]
+  (case (.-keyCode e)
+    13 (do (.preventDefault e)                              ; Enter
+           (open-docs! (active-result)))
+    false))
+
+(defn handle-shortcuts-up!
+  [e]
+  (case (.-keyCode e)
+    27 (hide-results!)                                      ; Esc
+    38 (when-let [prev (.-previousSibling (active-result))] ; Up
+         (set-active-result! prev))
+    40 (when-let [next (.-nextSibling (active-result))]     ; Down
+         (set-active-result! next))
+    false))
+
 (defn init!
   "Add the navbar to the document"
   []
   (-> (sel1 :#searchbar-container)
       (d/append! (searchbar-div)))
-  (d/listen! (sel1 :#search-field) :input search!))
+  (d/listen! (sel1 :#search-field)
+             :input search!
+             :keypress handle-shortcuts-press!
+             :keyup handle-shortcuts-up!))

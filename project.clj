@@ -28,10 +28,16 @@
 
               :builds
               {:dev
+                 {:source-paths ["src/cljs"]
+                  :jar true
+                  :compiler {:output-to "resources/public/js/main-debug.js"
+                             :optimizations :whitespace
+                             :pretty-print true}}
+               :prod
                {:source-paths ["src/cljs"]
                 :jar true
-                :compiler {:output-to "resources/public/js/main-debug.js"
-                           :optimizations :whitespace
-                           :pretty-print true}}}}
+                :compiler {:output-to "resources/public/js/main.js"
+                           :optimizations :advanced
+                           :pretty-print false}}}}
 
   :ring {:handler cloc.routes/main})

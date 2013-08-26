@@ -46,7 +46,7 @@
 
 (defn parent-result
   [e]
-  (d/closest (.-srcElement e) :li.result))
+  (d/closest (.-target e) :li.result))
 
 (defn with-results-listeners
   [list-item]

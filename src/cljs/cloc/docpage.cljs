@@ -59,12 +59,15 @@
 (defn ns-docs
   "Return a documentation page as a div for requested
    namespace and library."
-  [lib namesp]
+  [lib namesp & [name]]
   (GET "/api/docs"
        {:params {:lib lib
                  :namespace namesp}
         :handler (fn [docs]
-                   (swap-docpage (docpage-div lib docs)))}))
+                   (swap-docpage (docpage-div lib docs))
+                   (when name
+                     (when-let [elem (.getElementById js/document (str name))]
+                       (.scrollIntoView elem))))}))
 
 (defn show-landing!
   []

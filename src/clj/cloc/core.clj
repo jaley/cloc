@@ -8,9 +8,8 @@
 (def server (atom nil))
 
 (defn start-server!
+  "Start a jetty server"
   []
-  (index/init-index!)
-  (search/init-search-index! @index/index)
   (swap! server
          (fn [s]
            (when s (.stop s))
@@ -18,5 +17,13 @@
                             {:port 1337, :join? false}))))
 
 (defn stop-server!
+  "Stop the jetty server, if one is running."
   []
   (swap! server (fn [s] (when s (.stop s)))))
+
+(defn init!
+  "Ring initialiser function.
+   When working interactively, call this before start-server!"
+  [& _]
+  (index/init-index!)
+  (search/init-search-index! @index/index))

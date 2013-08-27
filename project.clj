@@ -40,4 +40,6 @@
                            :optimizations :advanced
                            :pretty-print false}}}}
 
-  :ring {:handler cloc.routes/main})
+  :ring {:handler cloc.routes/main
+         :init    cloc.core/init!
+         :port    1337})

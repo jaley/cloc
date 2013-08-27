@@ -17,6 +17,8 @@
                  [prismatic/dommy "0.1.1"]
                  [cljs-ajax "0.2.0"]]
 
+;;  :eval-in-leiningen true
+
   :plugins [[lein-cljsbuild "0.3.2"]
             [lein-ring "0.8.6"]]
 

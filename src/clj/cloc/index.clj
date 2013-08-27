@@ -1,7 +1,6 @@
 (ns cloc.index
   "Functions for access the documentation index structure."
-  (:require [clojure.java.classpath :refer [classpath]]
-            [codox.reader           :refer [read-namespaces]])
+  (:require [codox.reader :refer [read-namespaces]])
   (:import  [java.io File]))
 
 (def index
@@ -51,7 +50,6 @@
 (defn init-index!
   "Return a documentation index structure, to be used with the other
    functions in this namespace."
-  ([]   (init-index! (classpath)))
   ([cp] (reset! index (index-classpath cp))))
 
 (defn local-code

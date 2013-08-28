@@ -1,4 +1,4 @@
-(defproject cloc "0.1.0-SNAPSHOT"
+(defproject cloc "0.1.0"
   :description "Serve docs from your classpath to a local web server."
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

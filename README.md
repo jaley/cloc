@@ -6,6 +6,8 @@ to scan your source code and dependencies for docstrings, then server those docs
 a web UI, on a local web server. It also packs a fast, Lucene-powered search index, because
 documentation tools that don't have a search are just wrong.
 
+![Screenshot](http://i.imgur.com/uqYSdyz.png)
+
 ## Usage
 
 The idea is that you add Cloc as a plugin to your `:user` profile for Leiningen. In

@@ -49,7 +49,9 @@ Most useful ones will be:
         jars (mapv str
                   (filter (fn [f] (re-find #"\.jar$" (.getName f)))
                           (aether/dependency-files
-                           (cp/dependency-hierarchy :dependencies project))))]
+                           (cp/dependency-hierarchy :dependencies project))))
+        src  (reduce conj jars (concat (:source-paths project)
+                                       (:test-paths   project)))]
     (eval/eval-in-project (dummy-project project)
-                          `(cloc.core/main ~opts ~jars)
+                          `(cloc.core/main ~opts ~src)
                           '(require 'cloc.core))))

@@ -15,7 +15,9 @@
                        (fn [v] (= (first v) 'cloc/cloc)))
                       (:plugins project)))]
     {:dependencies (conj (:dependencies project) cloc-vec)
-     :repositories (:repositories project)}
+     :repositories (:repositories project)
+     :source-paths (:source-paths project)
+     :test-paths   (:test-paths   project)}
     (throw (Exception. (str "Cloc should be in your :plugins vector, "
                             "either in your ~/.lein/profiles.clj or in "
                             "the project itself.")))))

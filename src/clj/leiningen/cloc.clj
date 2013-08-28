@@ -1,8 +1,11 @@
 (ns leiningen.cloc
   "Leiningen plugin to start the cloc web server locally."
   (:require [leiningen.core.classpath    :as cp]
-            [cemerick.pomegranate.aether :as aether]
-            [cloc.core                   :refer [main]]))
+            [leiningen.core.eval         :as eval]
+            [cemerick.pomegranate.aether :as aether]))
+
+(def dummy-project
+  {:dependencies [['cloc "0.1.0-SNAPSHOT"]]})
 
 (defn- try-parse
   "Try to convert v to integer, then bool, else string."
@@ -21,13 +24,17 @@
     - :host -- host name to listen on
     - :port -- port to listen for connections on"
   [project & args]
-  (let [jars (filter (fn [f] (re-find #"\.jar$") (.getName f))
-                     (aether/dependency-files
-                      (cp/dependency-hierarchy :dependencies project)))]
+  (let [opts (merge
+              (reduce (fn [m [k v ]] (assoc m (keyword k) (try-parse v)))
+                      {}
+                      (partition 2 args))
+              {:port 1337 :join? true})
+        jars (mapv str
+                  (filter (fn [f] (re-find #"\.jar$" (.getName f)))
+                          (aether/dependency-files
+                           (cp/dependency-hierarchy :dependencies project))))]
     (assert (even? (count args))
             "Number of args should be even - only key-value pairs supported.")
-    (main (merge
-           (reduce (fn [m [k v ]] (assoc m (keyword k) (try-parse v)))
-                   {}
-                   (partition 2 args))
-           {:join? true}))))
+    (eval/eval-in-project dummy-project
+                          `(cloc.core/main ~opts ~jars)
+                          '(require 'cloc.core))))

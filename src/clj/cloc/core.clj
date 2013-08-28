@@ -32,5 +32,5 @@
 
 (defn main
   [ring-opts classpath]
-  (init! classpath)
+  (init! (map #(java.io.File. %) classpath))
   (start-server! ring-opts))

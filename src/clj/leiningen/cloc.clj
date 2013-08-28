@@ -24,6 +24,8 @@
     - :host -- host name to listen on
     - :port -- port to listen for connections on"
   [project & args]
+  (assert (even? (count args))
+            "Number of args should be even - only key-value pairs supported.")
   (let [opts (merge
               (reduce (fn [m [k v ]] (assoc m (keyword k) (try-parse v)))
                       {}
@@ -33,8 +35,6 @@
                   (filter (fn [f] (re-find #"\.jar$" (.getName f)))
                           (aether/dependency-files
                            (cp/dependency-hierarchy :dependencies project))))]
-    (assert (even? (count args))
-            "Number of args should be even - only key-value pairs supported.")
     (eval/eval-in-project dummy-project
                           `(cloc.core/main ~opts ~jars)
                           '(require 'cloc.core))))

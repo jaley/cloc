@@ -14,7 +14,8 @@
                       (complement
                        (fn [v] (= (first v) 'cloc/cloc)))
                       (:plugins project)))]
-    {:dependencies [cloc-vec]}
+    {:dependencies (conj (:dependencies project) cloc-vec)
+     :repositories (:repositories project)}
     (throw (Exception. (str "Cloc should be in your :plugins vector, "
                             "either in your ~/.lein/profiles.clj or in "
                             "the project itself.")))))
@@ -49,7 +50,6 @@ Most useful ones will be:
                   (filter (fn [f] (re-find #"\.jar$" (.getName f)))
                           (aether/dependency-files
                            (cp/dependency-hierarchy :dependencies project))))]
-    (println opts)
     (eval/eval-in-project (dummy-project project)
                           `(cloc.core/main ~opts ~jars)
                           '(require 'cloc.core))))

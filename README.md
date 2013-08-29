@@ -15,7 +15,7 @@ The idea is that you add Cloc as a plugin to your `:user` profile for Leiningen.
 
 ```
    {:user
-    {:plugins [[cloc "0.1.0-SNAPSHOT"]}}
+    {:plugins [[cloc "0.1.0"]}}
 ```
 
 That will make the Leiningen plugin available in all your projects. So, from some Leiningen

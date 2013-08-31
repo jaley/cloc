@@ -19,6 +19,8 @@
    [:div.docpage
     [:div.row
      [:h2.cloc-mono (str (get doc-map :name))]
+      (when-let [ns-doc (:doc doc-map)]
+       [:pre ns-doc])
      [:hr]
      [:div.span5
       [:dl.dl-horiztonal

@@ -43,7 +43,7 @@
    [:div.lib-heading lib-name]
    (code-list namespaces
               (fn [e]
-                (let [namespace (.. e -target -innerText)]
+                (let [namespace (str (.. e -target -textContent))]
                   (docpage/ns-docs lib-name namespace))))])
 
 (deftemplate browser-section
@@ -52,7 +52,7 @@
    [:h4 title]
    (code-list items
               (fn [e]
-                (let [lib (.. e -target -innerText)]
+                (let [lib (str (.. e -target -textContent))]
                   (GET "/api/ns"
                        {:params {:lib lib}
                         :handler (fn [nses]

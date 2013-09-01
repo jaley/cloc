@@ -17,7 +17,6 @@
   "Add cloc indexer to project dependencies."
   [project]
   (-> project
-      (assoc :eval-in-leiningen false)
       (update-in [:plugins] (fn [plugins]
                               (vec (remove (fn [[dep _]]
                                              (= dep 'cloc/cloc))
@@ -49,8 +48,7 @@
                       (complement
                        (fn [v] (= (first v) 'cloc/cloc)))
                       (:plugins project)))]
-    {:eval-in-leingen false
-     :dependencies [cloc-vec]}
+    {:dependencies [cloc-vec]}
     (throw (Exception. (str "Cloc should be in your :plugins vector, "
                             "either in your ~/.lein/profiles.clj or in "
                             "the project itself.")))))

@@ -1,4 +1,4 @@
-(defproject cloc "0.2.0-SNAPSHOT"
+(defproject cloc "0.2.1-SNAPSHOT"
   :description "Serve docs from your classpath to a local web server."
   :url "http://github.com/jaley/cloc"
   :license {:name "Eclipse Public License"

@@ -18,6 +18,10 @@
   [project]
   (-> project
       (assoc :eval-in-leiningen false)
+      (update-in [:plugins] (fn [plugins]
+                              (vec (remove (fn [[dep _]]
+                                             (= dep 'cloc/cloc))
+                                           plugins))))
       (update-in [:dependencies] conj ['cloc/indexer "0.1.0-SNAPSHOT"])))
 
 (defn- doc-edn-path
@@ -30,12 +34,12 @@
   "Run codox in the project to get the documentation map."
   [project paths]
   (let [doc-path (doc-edn-path project)]
-   (eval/eval-in-project (project-with-indexer project)
-                         `(do
-                            (spit ~doc-path
-                                  (cloc.indexer/index-classpath ~paths))
-                            (System/exit 0))
-                         '(require 'cloc.indexer))))
+    (eval/eval-in-project (project-with-indexer project)
+                          `(do
+                             (spit ~doc-path
+                                   (cloc.indexer/index-classpath ~paths))
+                             (System/exit 0))
+                          '(require 'cloc.indexer))))
 
 (defn- cloc-project
   "Create a project to launch cloc, with only cloc as a dependency."

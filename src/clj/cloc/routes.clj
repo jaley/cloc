@@ -5,7 +5,8 @@
             [ring.middleware.edn    :refer [wrap-edn-params]]
             [ring.middleware.params :refer [wrap-params]]
             [cloc.pages             :as    pages]
-            [cloc.index             :as    index]
+            [cloc.indexer           :as    ind]
+            [cloc.index             :refer [index]]
             [cloc.search            :refer [search]]))
 
 (defn landing-page
@@ -30,12 +31,12 @@
 
 (defroutes api
   (context "/api" []
-           (GET "/local" [] (edn-response (index/local-code)))
-           (GET "/libs"  [] (edn-response (index/libraries)))
+           (GET "/local" [] (edn-response (ind/local-code @index)))
+           (GET "/libs"  [] (edn-response (ind/libraries @index)))
            (GET "/ns" [lib]
-                (edn-response (index/namespaces lib)))
+                (edn-response (ind/namespaces @index lib)))
            (GET "/docs" [lib namespace]
-                (edn-response (index/docs lib namespace)))
+                (edn-response (ind/docs @index lib namespace)))
            (GET "/search" [query]
                 (edn-response (search query)))))
 

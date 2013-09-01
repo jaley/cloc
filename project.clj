@@ -5,7 +5,6 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/java.classpath "0.2.0"]
-                 [codox/codox.core "0.6.4"]
                  [hiccup "1.0.4"]
                  [compojure "1.1.5"]
                  [ring/ring-core "1.2.0"]
@@ -14,6 +13,7 @@
                  [org.apache.lucene/lucene-core "4.4.0"]
                  [org.apache.lucene/lucene-analyzers-common "4.4.0"]
                  [org.apache.lucene/lucene-queryparser "4.4.0"]
+                 [cloc/indexer "0.1.0-SNAPSHOT"]
 
                  [prismatic/dommy "0.1.1"]
                  [cljs-ajax "0.2.0"]]
@@ -41,8 +41,4 @@
                 :jar true
                 :compiler {:output-to "resources/public/js/main.js"
                            :optimizations :advanced
-                           :pretty-print false}}}}
-
-  :ring {:handler cloc.routes/main
-         :init    cloc.core/init!
-         :port    1337})
+                           :pretty-print false}}}})

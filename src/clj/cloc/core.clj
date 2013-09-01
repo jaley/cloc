@@ -26,11 +26,14 @@
 (defn init!
   "Ring initialiser function.
    When working interactively, call this before start-server!"
-  [& [classpath]]
-  (index/init-index! (or classpath (cp/classpath)))
+  [& [index]]
+  (if index
+    (index/init-index-from-lein! index)
+    (index/init-index-from-classpath! (cp/classpath)))
   (search/init-search-index! @index/index))
 
 (defn main
-  [ring-opts classpath]
-  (init! (map #(java.io.File. %) classpath))
-  (start-server! ring-opts))
+  [ring-opts index-file]
+  (let [index (read-string (slurp index-file))]
+   (init! index)
+   (start-server! ring-opts)))
